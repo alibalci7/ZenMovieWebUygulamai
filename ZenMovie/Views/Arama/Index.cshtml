@@ -1,0 +1,60 @@
+﻿@using ZenMovie.Models;
+@{
+    ViewBag.Title = "ZenMovie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- page title -->
+<section class="section section--first section--bg" data-bg="../../Content/img/section/section.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section__wrap">
+                    <!-- section title -->
+                    <h2 class="section__title"> ARAMA SONUCU </h2>
+                    <!-- end section title -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end page title -->
+<div class="container">
+    <!--Film Tablo Start-->
+    <div>
+        <div>
+            <h1 style="color:white;"> Filmler </h1>
+        </div>
+        <div id="film" class="row">
+
+        </div>
+        <div>
+            <center> <div id="pagination-wrapper-film"></div> </center>
+        </div>
+    </div>
+    <!--Film Tablo End-->
+    <!--Dizi Tablo Start-->
+    <div>
+        <div>
+            <h1 style="color:white;"> Diziler </h1>
+        </div>
+        <div id="dizi" class="row">
+
+        </div>
+        <div>
+            <center> <div id="pagination-wrapper-dizi"></div> </center>
+        </div>
+    </div>
+    <!--Dizi Tablo End-->
+</div>
+<!--Begin Yükleniyor Resmi-->
+<div id="loading">
+    <div>
+        <img src="../../Content/img/yukleniyor2.gif" alt="Yükleniyor" height="100" width="100" />
+    </div>
+</div>
+<!--End Yükleniyor Resmi-->
+
+
+@section scripts {
+    <script src="~/Content/js/AramaJS.js"></script>
+}

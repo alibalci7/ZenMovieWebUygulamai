@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<!-- Mirrored from dmitryvolkov.me/demo/hotflix/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jul 2020 12:44:12 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/Content/css/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="~/Content/css/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="~/Content/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="~/Content/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="~/Content/css/nouislider.min.css">
+    <link rel="stylesheet" href="~/Content/css/ionicons.min.css">
+    <link rel="stylesheet" href="~/Content/css/plyr.css">
+    <link rel="stylesheet" href="~/Content/css/photoswipe.css">
+    <link rel="stylesheet" href="~/Content/css/default-skin.css">
+    <link rel="stylesheet" href="~/Content/css/main.css">
+    @RenderSection("css", false)
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" href="~/Content/icon/favicon-32x32.png" sizes="32x32">
+    <link rel="apple-touch-icon" href="~/Content/icon/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="~/Content/icon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="~/Content/icon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="~/Content/icon/apple-touch-icon-144x144.png">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Dmitry Volkov">
+    <title> @ViewBag.Title </title>
+</head>
+<body class="body">
+    <!-- header -->
+    <header class="header">
+        <div class="container">
+            @Html.Partial("_Header")
+        </div>
+    </header>
+    <!-- end header -->
+    <!-- section -->
+    @RenderBody()
+    <!-- end section -->
+    <!-- footer -->
+    <footer class="footer">
+        <div class="container">
+            @Html.Partial("_Footer")
+        </div>
+    </footer>
+    <!-- end footer -->
+    <!-- JS -->
+    <script src="~/Content/js/jquery-3.3.1.min.js"></script>
+    <script src="~/Content/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/js/owl.carousel.min.js"></script>
+    <script src="~/Content/js/jquery.mousewheel.min.js"></script>
+    <script src="~/Content/js/jquery.mCustomScrollbar.min.js"></script>
+    <script src="~/Content/js/wNumb.js"></script>
+    <script src="~/Content/js/nouislider.min.js"></script>
+    <script src="~/Content/js/jquery.morelines.min.js"></script>
+    <script src="~/Content/js/plyr.min.js"></script>
+    <script src="~/Content/js/photoswipe.min.js"></script>
+    <script src="~/Content/js/photoswipe-ui-default.min.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    @RenderSection("scripts", false)
+
+</body>
+<!-- Mirrored from dmitryvolkov.me/demo/hotflix/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 21 Jul 2020 12:44:35 GMT -->
+</html>

@@ -1,0 +1,87 @@
+﻿@using ZenMovie.Models;
+@{
+    ViewBag.Title = "Dizi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    Dizi dizi = ViewBag.dizi;
+    List<string> sezonnolar = ViewBag.sezonnolar;
+}
+
+<!-- details -->
+<section class="section section--details section--bg" data-bg="../../Content/img/section/details.jpg">
+    <!-- details content -->
+    <div class="container">
+        <div class="row">
+            <!-- title -->
+            <div class="col-12">
+                <h1 class="section__title">@dizi.DiziBaslik</h1>
+            </div>
+            <!-- end title -->
+            <!-- content -->
+            <div class="col-12 col-lg-6">
+                <div class="card card--details">
+                    <div class="row">
+                        <!-- card cover -->
+                        <div class="col-12 col-sm-5 col-lg-6 col-xl-5">
+                            <div class="card__cover">
+                                <img src="@dizi.Resim" width="150" height="200" alt="">
+                                <span class="card__rate card__rate--green">@dizi.DiziIMDB</span>
+                            </div>
+                        </div>
+                        <!-- end card cover -->
+                        <!-- card content -->
+                        <div class="col-12 col-sm-7 col-lg-6 col-xl-7">
+                            <div class="card__content">
+                                <ul class="card__meta">
+                                    <li><span>Yönetmen:</span> @dizi.DiziYonetmenler</li>
+                                    <li><span>Oyuncular:</span> @dizi.DiziOyuncular </li>
+                                    <li><span>Başlangıç Yılı:</span> @dizi.DiziBaslangicYili</li>
+                                    <li><span>İzlenme Sayısı:</span> @dizi.DiziIzlenmeSayisi</li>
+                                    <li><span>Beğeni Oranı:</span> @dizi.DiziBegeniOrani</li>
+                                </ul>
+                                <div class="card__description">
+                                    @dizi.DiziKonu
+                                </div>
+                            </div>
+                        </div>
+                        <!-- end card content -->
+                    </div>
+                </div>
+            </div>
+            <!-- end content -->
+            <!-- player -->
+            <!-- end player -->
+        </div>
+
+        <!-- filter -->
+        <div class="filter__items">
+            <!-- filter item -->
+            <div class="filter__item" id="filter__genre">
+                <span class="filter__item-label" style="font-size:24px;">Sezonlar</span>
+                <div class="filter__item-btn dropdown-toggle" role="navigation" id="filter-genre" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <input type="button" value="1">
+                    <span></span>
+                </div>
+                <ul class="filter__item-menu dropdown-menu scrollbar-dropdown" aria-labelledby="filter-genre">
+                    @foreach (var item in sezonnolar)
+                    {
+                        <li class="bolumlericek" data-sezon="@item" data-id="@dizi.DiziID" ><a style="font-size:16px;"> @item </a></li>
+                    }
+                </ul>
+            </div>
+            <!-- end filter item -->
+        </div>
+        <!-- end filter -->
+
+        <br /><br /><br /><br /><br />
+
+        <div class="row" id="bolumler">
+
+        </div>
+    </div>
+    <!-- end details content -->
+</section>
+<!-- end details -->
+
+@section scripts {
+    <script src="~/Content/js/DiziIndexJS.js"></script>
+}

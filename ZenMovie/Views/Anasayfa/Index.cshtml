@@ -1,0 +1,394 @@
+﻿@using ZenMovie.Models;
+@{
+    ViewBag.Title = "ZenMovie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<Dizi> diziler = ViewBag.diziler;
+    List<Film> filmler = ViewBag.filmler;
+    List<Kategori> kategoriler = ViewBag.kategoriler;
+
+    List<Film> soneklenenfilmler = ViewBag.soneklenenfilmler;
+    List<Film> cokizlenenfilmler = ViewBag.cokizlenenfilmler;
+    List<Film> enbegenilenfilmler = ViewBag.enbegenilenfilmler;
+
+    List<Dizi> soneklenendiziler = ViewBag.soneklenendiziler;
+    List<Dizi> cokizlenendiziler = ViewBag.cokizlenendiziler;
+    List<Dizi> enbegenilendiziler = ViewBag.enbegenilendiziler;
+}
+
+<!-- page title -->
+<section class="section section--first section--bg" data-bg="../../Content/img/section/section.jpg">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section__wrap">
+                    <!-- section title -->
+                    <h2 class="section__title"> ANA SAYFA </h2>
+                    <!-- end section title -->
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- end page title -->
+<!-- filter -->
+<div class="filter">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="filter__content">
+                    <div class="filter__items">
+                        <!-- filter item -->
+                        <div class="filter__item" id="filter__genre">
+                            <span class="filter__item-label">TÜR:</span>
+                            <div class="filter__item-btn dropdown-toggle" role="navigation" id="filter-genre" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <input type="button" value="Kategori Seçiniz">
+                                <span></span>
+                            </div>
+                            <ul class="filter__item-menu dropdown-menu scrollbar-dropdown" aria-labelledby="filter-genre">
+                                <li><u>Yerli Filmler</u></li>
+                                @foreach (var kategori in kategoriler.Where(x => x.KategoriUstID == 1))
+                                {
+                                    <li><a onclick="KategoriSec(@kategori.KategoriID)"> @kategori.KategoriAd </a> </li>
+                                }
+                                <li><u>Yabancı Filmler</u></li>
+                                @foreach (var kategori in kategoriler.Where(x => x.KategoriUstID == 2))
+                                {
+                                    <li><a onclick="KategoriSec(@kategori.KategoriID)"> @kategori.KategoriAd </a> </li>
+                                }
+                            </ul>
+                        </div>
+                        <!-- end filter item -->
+                        <!-- filter item -->
+                        <div class="filter__item" id="filter__rate">
+                            <span class="filter__item-label">IMDB:</span>
+                            <div class="filter__item-btn dropdown-toggle" role="button" id="filter-rate" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="filter__range">
+                                    <div id="filter__imbd-start"></div>
+                                    <div id="filter__imbd-end"></div>
+                                </div>
+                                <span></span>
+                            </div>
+                            <div class="filter__item-menu filter__item-menu--range dropdown-menu" aria-labelledby="filter-rate">
+                                <div id="filter__imbd"></div>
+                            </div>
+                        </div>
+                        <!-- end filter item -->
+                        <!-- filter item -->
+                        <div class="filter__item" id="filter__year">
+                            <span class="filter__item-label">YAPIM YILI:</span>
+                            <div class="filter__item-btn dropdown-toggle" role="button" id="filter-year" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="filter__range">
+                                    <div id="filter__years-start"></div>
+                                    <div id="filter__years-end"></div>
+                                </div>
+                                <span></span>
+                            </div>
+                            <div class="filter__item-menu filter__item-menu--range dropdown-menu" aria-labelledby="filter-year">
+                                <div id="filter__years"></div>
+                            </div>
+                        </div>
+                        <!-- end filter item -->
+                    </div>
+
+                    <!-- filter btn -->
+                    <button class="filter__btn" type="button" onclick="Goster()">FİLTREYİ UYGULA</button>
+                    <!-- end filter btn -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end filter -->
+<!-- content -->
+<section class="content">
+    <div class="content__head">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- content title -->
+                    <h2 class="content__title"> SON EKLENENLER </h2>
+                    <!-- end content title -->
+                    <!-- content tabs nav -->
+                    <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="false"> FİLMLER </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false"> DİZİLER </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false"> ÇİZGİ FİLMLER </a>
+                        </li>
+                    </ul>
+                    <!-- end content tabs nav -->
+                    <!-- content mobile tabs nav -->
+                    <div class="content__mobile-tabs" id="content__mobile-tabs">
+                        <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <input type="button" value="New releases">
+                            <span></span>
+                        </div>
+                        <div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" id="1-tab" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="false"> FİLMLER </a></li>
+                                <li class="nav-item"><a class="nav-link" id="2-tab" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false"> DİZİLER </a></li>
+                                <li class="nav-item"><a class="nav-link" id="3-tab" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false"> ÇİZGİ FİLMLER </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end content mobile tabs nav -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- content tabs -->
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-1" role="tabpanel" aria-labelledby="1-tab">
+                <div class="row">
+                    @foreach (var item in soneklenenfilmler)
+                    {
+                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="@item.Resim" width="150" height="200" alt="">
+                                    <a href="/Film/Index/@item.FilmID" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                    <span class="card__rate card__rate--green">@item.FilmIMDB</span>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">@item.FilmBaslik</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab-2" role="tabpanel" aria-labelledby="2-tab">
+                <div class="row">
+                    @foreach (var item in soneklenendiziler)
+                    {
+                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="@item.Resim" width="150" height="200" alt="">
+                                    <a href="/Dizi/Index/@item.DiziID" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                    <span class="card__rate card__rate--green">@item.DiziIMDB</span>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">@item.DiziBaslik</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab-3" role="tabpanel" aria-labelledby="3-tab">
+                <div class="row" id="soneklenencizgifilm">
+
+                </div>
+            </div>
+        </div>
+        <!-- end content tabs -->
+    </div>
+</section>
+<!-- end content -->
+<!-- content -->
+<section class="content">
+    <div class="content__head">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- content title -->
+                    <h2 class="content__title"> EN ÇOK BEĞENİLENLER </h2>
+                    <!-- end content title -->
+                    <!-- content tabs nav -->
+                    <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-5" role="tab" aria-controls="tab-5" aria-selected="false"> FİLMLER </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-6" role="tab" aria-controls="tab-6" aria-selected="false"> DİZİLER </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-7" role="tab" aria-controls="tab-7" aria-selected="false"> ÇİZGİ FİLMLER </a>
+                        </li>
+                    </ul>
+                    <!-- end content tabs nav -->
+                    <!-- content mobile tabs nav -->
+                    <div class="content__mobile-tabs" id="content__mobile-tabs">
+                        <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <input type="button" value="New releases">
+                            <span></span>
+                        </div>
+                        <div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" id="5-tab" data-toggle="tab" href="#tab-5" role="tab" aria-controls="tab-5" aria-selected="false"> FİLMLER </a></li>
+                                <li class="nav-item"><a class="nav-link" id="6-tab" data-toggle="tab" href="#tab-6" role="tab" aria-controls="tab-6" aria-selected="false"> DİZİLER </a></li>
+                                <li class="nav-item"><a class="nav-link" id="7-tab" data-toggle="tab" href="#tab-7" role="tab" aria-controls="tab-7" aria-selected="false"> ÇİZGİ FİLMLER </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end content mobile tabs nav -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- content tabs -->
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-5" role="tabpanel" aria-labelledby="1-tab">
+                <div class="row">
+                    @foreach (var item in enbegenilenfilmler)
+                    {
+                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="@item.Resim" width="150" height="200" alt="">
+                                    <a href="/Film/Index/@item.FilmID" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                    <span class="card__rate card__rate--green">@item.FilmIMDB</span>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">@item.FilmBaslik</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab-6" role="tabpanel" aria-labelledby="3-tab">
+                <div class="row">
+                    @foreach (var item in enbegenilendiziler)
+                    {
+                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="@item.Resim" width="150" height="200" alt="">
+                                    <a href="/Dizi/Index/@item.DiziID" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                    <span class="card__rate card__rate--green">@item.DiziIMDB</span>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">@item.DiziBaslik</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab-7" role="tabpanel" aria-labelledby="4-tab">
+                <div class="row" id="soneklenencizgifilm">
+
+                </div>
+            </div>
+        </div>
+        <!-- end content tabs -->
+    </div>
+</section>
+<!-- end content -->
+<!-- content -->
+<section class="content">
+    <div class="content__head">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <!-- content title -->
+                    <h2 class="content__title"> EN ÇOK İZLENENLER </h2>
+                    <!-- end content title -->
+                    <!-- content tabs nav -->
+                    <ul class="nav nav-tabs content__tabs" id="content__tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-9" role="tab" aria-controls="tab-9" aria-selected="false"> FİLMLER </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-10" role="tab" aria-controls="tab-10" aria-selected="false"> DİZİLER </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-11" role="tab" aria-controls="tab-11" aria-selected="false"> ÇİZGİ FİLMLER </a>
+                        </li>
+                    </ul>
+                    <!-- end content tabs nav -->
+                    <!-- content mobile tabs nav -->
+                    <div class="content__mobile-tabs" id="content__mobile-tabs">
+                        <div class="content__mobile-tabs-btn dropdown-toggle" role="navigation" id="mobile-tabs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <input type="button" value="New releases">
+                            <span></span>
+                        </div>
+                        <div class="content__mobile-tabs-menu dropdown-menu" aria-labelledby="mobile-tabs">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item"><a class="nav-link" id="9-tab" data-toggle="tab" href="#tab-9" role="tab" aria-controls="tab-9" aria-selected="false"> FİLMLER </a></li>
+                                <li class="nav-item"><a class="nav-link" id="10-tab" data-toggle="tab" href="#tab-10" role="tab" aria-controls="tab-10" aria-selected="false"> DİZİLER </a></li>
+                                <li class="nav-item"><a class="nav-link" id="11-tab" data-toggle="tab" href="#tab-11" role="tab" aria-controls="tab-11" aria-selected="false"> ÇİZGİ FİLMLER </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- end content mobile tabs nav -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <!-- content tabs -->
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-9" role="tabpanel" aria-labelledby="1-tab">
+                <div class="row">
+                    @foreach (var item in cokizlenenfilmler)
+                    {
+                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="@item.Resim" width="150" height="200" alt="">
+                                    <a href="/Film/Index/@item.FilmID" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                    <span class="card__rate card__rate--green">@item.FilmIMDB</span>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">@item.FilmBaslik</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab-10" role="tabpanel" aria-labelledby="3-tab">
+                <div class="row">
+                    @foreach (var item in cokizlenendiziler)
+                    {
+                        <div class="col-6 col-sm-4 col-md-3 col-xl-2">
+                            <div class="card">
+                                <div class="card__cover">
+                                    <img src="@item.Resim" width="150" height="200" alt="">
+                                    <a href="/Dizi/Index/@item.DiziID" class="card__play">
+                                        <i class="icon ion-ios-play"></i>
+                                    </a>
+                                    <span class="card__rate card__rate--green">@item.DiziIMDB</span>
+                                </div>
+                                <div class="card__content">
+                                    <h3 class="card__title"><a href="#">@item.DiziBaslik</a></h3>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="tab-pane fade" id="tab-11" role="tabpanel" aria-labelledby="4-tab">
+                <div class="row" id="soneklenencizgifilm">
+
+                </div>
+            </div>
+        </div>
+        <!-- end content tabs -->
+    </div>
+</section>
+<!-- end content -->
+
+@section scripts {
+    <script src="~/Content/js/AnaSayfaJS.js"></script>
+}
+
