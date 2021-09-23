@@ -8,11 +8,11 @@ namespace ZenMovie.Tools
 {
     public class apiData
     {
-        static string yol = "http://192.168.1.49:8085/api/";
+        static string yol = "http://192.168.1.8:8085/api/";
 
         public static List<Dizi> GetApiDataDizi()
         {
-            string dizi = yol + "Dizi/GetDizileriListele";
+            string dizi = yol + "Dizi/GetDizileriListele?imdbmin=1&imdbmax=10&yilmin=1950&yilmax=2200&id=0&adet=10";
 
             //Connect API
             Uri url = new Uri(dizi);
@@ -31,7 +31,7 @@ namespace ZenMovie.Tools
 
         public static List<Film> GetApiDataFilm()
         {
-            string film = yol + "Film/GetFilmleriListele";
+            string film = yol + "Film/GetFilmleriListele?imdbmin=1&imdbmax=10&yilmin=1950&yilmax=2200&id=0&adet=10";
 
             //Connect API
             Uri url = new Uri(film);
@@ -51,7 +51,7 @@ namespace ZenMovie.Tools
         public static List<Bolum> GetApiDataBolum()
         {
 
-            string bolum = yol + "Dizi/GetBolumleriListele";
+            string bolum = yol + "Dizi/GetBolumleriListele?id=1";
 
             //Connect API
             Uri url = new Uri(bolum);
